@@ -21,10 +21,21 @@ if menu.startswith("1"):
         st.info(f"ATLAS AI: Jawaban buat '{prompt}' masih dummy R 😂 Nanti sambungin ke AI beneran")
 
 elif menu.startswith("2"):
-    st.subheader("Wikipedia")
+    st.subheader("Tanya Wikipedia Langsung")
+    import wikipedia
+    wikipedia.set_lang("id")  # Biar hasilnya bahasa Indo
+    
     query = st.text_input("Cari apa di Wikipedia:")  
     if st.button("Cari"):
-        st.warning("Fitur Wikipedia belum disambungin R. Butuh library `wikipedia`")
+        if query:
+            try:
+                hasil = wikipedia.summary(query, sentences=3)  # Ambil 3 kalimat aja
+                st.success(hasil)
+                st.caption(f"Sumber: Wikipedia | Cari lengkap: https://id.wikipedia.org/wiki/{query}")
+            except:
+                st.error("Gak ketemu R. Coba kata kunci lain")
+        else:
+            st.warning("Isi dulu mau cari apa R")
 
 elif menu.startswith("3"):
     st.subheader("Database.txt")
